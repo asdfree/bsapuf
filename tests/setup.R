@@ -43,19 +43,11 @@ dbGetQuery( db ,
 	FROM bsa_partd_events_2008 
 	GROUP BY bene_sex_ident_cd" 
 )
-dbSendQuery( db , 
-	"CREATE FUNCTION 
-		div_noerror(l DOUBLE, r DOUBLE) 
-	RETURNS DOUBLE 
-	EXTERNAL NAME calc.div_noerror" 
-)
 dbGetQuery( db , 
 	"SELECT 
 		bene_age_cat_cd , 
-		div_noerror( 
-			COUNT(*) , 
-			( SELECT COUNT(*) FROM bsa_partd_events_2008 ) 
-		) AS share_bene_age_cat_cd
+		COUNT(*) / ( SELECT COUNT(*) FROM bsa_partd_events_2008 ) 
+			AS share_bene_age_cat_cd
 	FROM bsa_partd_events_2008 
 	GROUP BY bene_age_cat_cd" 
 )
