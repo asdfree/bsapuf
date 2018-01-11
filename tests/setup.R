@@ -60,12 +60,22 @@ dbGetQuery( db ,
 	FROM bsa_partd_events_2008 
 	GROUP BY bene_sex_ident_cd" 
 )
-dbGetQuery( db , "SELECT QUANTILE( pde_drug_cost , 0.5 ) FROM bsa_partd_events_2008" )
+RSQLite::initExtension( db )
+
+dbGetQuery( db , 
+	"SELECT 
+		LOWER_QUARTILE( pde_drug_cost ) , 
+		MEDIAN( pde_drug_cost ) , 
+		UPPER_QUARTILE( pde_drug_cost ) 
+	FROM bsa_partd_events_2008" 
+)
 
 dbGetQuery( db , 
 	"SELECT 
 		bene_sex_ident_cd , 
-		QUANTILE( pde_drug_cost , 0.5 ) AS median_pde_drug_cost
+		LOWER_QUARTILE( pde_drug_cost ) AS lower_quartile_pde_drug_cost , 
+		MEDIAN( pde_drug_cost ) AS median_pde_drug_cost , 
+		UPPER_QUARTILE( pde_drug_cost ) AS upper_quartile_pde_drug_cost
 	FROM bsa_partd_events_2008 
 	GROUP BY bene_sex_ident_cd" 
 )
@@ -75,18 +85,20 @@ dbGetQuery( db ,
 	FROM bsa_partd_events_2008
 	WHERE pde_drug_pat_pay_cd = 3"
 )
+RSQLite::initExtension( db )
+
 dbGetQuery( db , 
 	"SELECT 
-		VAR_SAMP( pde_drug_cost ) , 
-		STDDEV_SAMP( pde_drug_cost ) 
+		VARIANCE( pde_drug_cost ) , 
+		STDEV( pde_drug_cost ) 
 	FROM bsa_partd_events_2008" 
 )
 
 dbGetQuery( db , 
 	"SELECT 
 		bene_sex_ident_cd , 
-		VAR_SAMP( pde_drug_cost ) AS var_pde_drug_cost ,
-		STDDEV_SAMP( pde_drug_cost ) AS stddev_pde_drug_cost
+		VARIANCE( pde_drug_cost ) AS var_pde_drug_cost ,
+		STDEV( pde_drug_cost ) AS stddev_pde_drug_cost
 	FROM bsa_partd_events_2008 
 	GROUP BY bene_sex_ident_cd" 
 )
