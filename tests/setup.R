@@ -102,19 +102,6 @@ dbGetQuery( db ,
 	FROM bsa_partd_events_2008 
 	GROUP BY bene_sex_ident_cd" 
 )
-dbGetQuery( db , 
-	"SELECT 
-		CORR( CAST( brand_name_drug AS DOUBLE ) , CAST( pde_drug_cost AS DOUBLE ) )
-	FROM bsa_partd_events_2008" 
-)
-
-dbGetQuery( db , 
-	"SELECT 
-		bene_sex_ident_cd , 
-		CORR( CAST( brand_name_drug AS DOUBLE ) , CAST( pde_drug_cost AS DOUBLE ) )
-	FROM bsa_partd_events_2008 
-	GROUP BY bene_sex_ident_cd" 
-)
 library(dplyr)
 dplyr_db <- dplyr::src_sqlite( dbdir )
 bsapuf_tbl <- tbl( dplyr_db , 'bsa_partd_events_2008' )
