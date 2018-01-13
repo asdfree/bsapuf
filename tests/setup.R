@@ -105,6 +105,7 @@ dbGetQuery( db ,
 	GROUP BY bene_sex_ident_cd" 
 )
 library(dplyr)
+library(dbplyr)
 dplyr_db <- dplyr::src_sqlite( dbdir )
 bsapuf_tbl <- tbl( dplyr_db , 'bsa_partd_events_2008' )
 bsapuf_tbl %>%
