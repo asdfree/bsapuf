@@ -104,7 +104,7 @@ dbGetQuery( db ,
 	FROM bsa_partd_events_2008 
 	GROUP BY bene_sex_ident_cd" 
 )
-bsapuf_three_columns_df <- 
+bsapuf_slim_df <- 
 	dbGetQuery( db , 
 		"SELECT 
 			pde_drug_cost , 
@@ -113,14 +113,15 @@ bsapuf_three_columns_df <-
 		FROM bsa_partd_events_2008" 
 	)
 
-t.test( pde_drug_cost ~ brand_name_drug , bsapuf_three_columns_df )
-this_table <- table( bsapuf_three_columns_df[ , c( "brand_name_drug" , "bene_age_cat_cd" ) ] )
+t.test( pde_drug_cost ~ brand_name_drug , bsapuf_slim_df )
+this_table <-
+	table( bsapuf_slim_df[ , c( "brand_name_drug" , "bene_age_cat_cd" ) ] )
 
 chisq.test( this_table )
 glm_result <- 
 	glm( 
 		pde_drug_cost ~ brand_name_drug + bene_age_cat_cd , 
-		data = bsapuf_three_columns_df
+		data = bsapuf_slim_df
 	)
 
 summary( glm_result )
