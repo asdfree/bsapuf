@@ -7,7 +7,7 @@ this_sample_break <- Sys.getenv( "this_sample_break" )
 bsapuf_cat <- get_catalog( "bsapuf" , output_dir = file.path( getwd() ) )
 record_categories <- ceiling( seq( nrow( bsapuf_cat ) ) / ceiling( nrow( bsapuf_cat ) / 32 ) )
 bsapuf_cat <- bsapuf_cat[ record_categories == this_sample_break , ]
-lodown( "bsapuf" , bsapuf_cat )
+bsapuf_cat <- lodown( "bsapuf" , bsapuf_cat )
 if( any( bsapuf_cat$db_tablename == 'bsa_partd_events_2008' ) ){
 library(DBI)
 dbdir <- file.path( getwd() , "SQLite.db" )
