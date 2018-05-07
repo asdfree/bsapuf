@@ -135,5 +135,4 @@ bsapuf_tbl %>%
 bsapuf_tbl %>%
 	group_by( bene_sex_ident_cd ) %>%
 	summarize( mean = mean( pde_drug_cost ) )
-dbGetQuery( db , "SELECT COUNT(*) FROM bsa_partd_events_2008" )
 }
